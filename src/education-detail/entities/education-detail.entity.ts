@@ -1,9 +1,10 @@
-import { BaseEntity, Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { SeekerProfile } from "src/seeker-profile/entities/seeker-profile.entity";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('education_detail')
 export class EducationDetail {
     @PrimaryGeneratedColumn()
-    user_accoumt_id: number
+    education_detail_id: number
 
     @Column()
     certification_degree_name: string
@@ -19,4 +20,7 @@ export class EducationDetail {
 
     @Column()
     completion_date: Date
+
+    @ManyToOne(() => SeekerProfile, (seeker) => seeker.education)
+    seeker: SeekerProfile
 }

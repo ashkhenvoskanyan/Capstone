@@ -1,11 +1,12 @@
-import { BaseEntity, Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { SeekerProfile } from "src/seeker-profile/entities/seeker-profile.entity";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('experience_detail')
 
 export class ExperienceDetail extends BaseEntity{
 
     @PrimaryGeneratedColumn()
-    user_acount_id: number
+    experience_detail_id: number
 
     @Column()
     is_current_job: string
@@ -24,5 +25,8 @@ export class ExperienceDetail extends BaseEntity{
 
     @Column()
     description: string
+
+    @ManyToOne(() => SeekerProfile, (seeker) => seeker.experiences)
+    seeker: SeekerProfile
     
 }

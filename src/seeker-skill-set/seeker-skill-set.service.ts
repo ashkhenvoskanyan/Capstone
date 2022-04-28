@@ -1,11 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { SeekerProfile } from 'src/seeker-profile/entities/seeker-profile.entity';
+import { getManager } from 'typeorm';
 import { CreateSeekerSkillSetDto } from './dto/create-seeker-skill-set.dto';
 import { UpdateSeekerSkillSetDto } from './dto/update-seeker-skill-set.dto';
+import { SeekerSkillSet } from './entities/seeker-skill-set.entity';
 
 @Injectable()
 export class SeekerSkillSetService {
-  create(createSeekerSkillSetDto: CreateSeekerSkillSetDto) {
-    return 'This action adds a new seekerSkillSet';
+  async create(createSeekerSkillSetDto: CreateSeekerSkillSetDto) {
+    const{skills, user_id} = createSeekerSkillSetDto;
+    const SkillRepo = getManager().getRepository(SeekerSkillSet);
+    const SeekerProfileRepo = getManager().getRepository(SeekerProfile)
+    const seeker = await SeekerProfileRepo.findOne({seeker_profile_id: user_id});
+    Object.values(skills).forEach(async (skillName: string) => {
+      const skill = {
+        seeker,
+        skills: skillName
+      }
+      SkillRepo.create(skill);
+      await SkillRepo.save(skill);
+    });
   }
 
   findAll() {

@@ -9,7 +9,7 @@ export class SeekerSkillSetController {
 
   @Post()
   create(@Body() createSeekerSkillSetDto: CreateSeekerSkillSetDto) {
-    return this.seekerSkillSetService.create(createSeekerSkillSetDto);
+    //return this.seekerSkillSetService.create(createSeekerSkillSetDto);
   }
 
   @Get()
