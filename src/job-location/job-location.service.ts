@@ -1,11 +1,23 @@
 import { Injectable } from '@nestjs/common';
+import { getManager } from 'typeorm';
 import { CreateJobLocationDto } from './dto/create-job-location.dto';
 import { UpdateJobLocationDto } from './dto/update-job-location.dto';
+import { JobLocation } from './entities/job-location.entity';
 
 @Injectable()
 export class JobLocationService {
-  create(createJobLocationDto: CreateJobLocationDto) {
-    return 'This action adds a new jobLocation';
+  async create(createJobLocationDto: CreateJobLocationDto) {
+
+    const {street_address, city, country} = createJobLocationDto
+
+    const LocationRepo = getManager().getRepository(JobLocation)
+    const location = LocationRepo.create({
+      street_address, 
+      city, 
+      country
+      })
+      await LocationRepo.save(location)
+    return location
   }
 
   findAll() {
