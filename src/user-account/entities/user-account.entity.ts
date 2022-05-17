@@ -1,5 +1,4 @@
 import { SeekerProfile } from "src/seeker-profile/entities/seeker-profile.entity";
-import { UserType } from "src/user-type/entities/user-type.entity";
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 
@@ -34,11 +33,11 @@ export class UserAccount extends BaseEntity{
     @Column()
     contact_number: number
 
-    // @Column()
-    // user_image: string //"aaa.jpg" ask Saro 
+    @Column()
+    user_type: number
 
-    @ManyToOne(() => UserType, userType => userType.users, {eager: true})
-    user_type: UserType
+    // @Column()
+    // user_image: string //"aaa.jpg" ask Saro
 
     @OneToMany(() => SeekerProfile, (seeker) => seeker.user)
     seeker: SeekerProfile[]

@@ -14,9 +14,9 @@ import { JobTypeModule } from './job-type/job-type.module';
 import { SeekerProfileModule } from './seeker-profile/seeker-profile.module';
 import { SeekerSkillSetModule } from './seeker-skill-set/seeker-skill-set.module';
 import { UserAccountModule } from './user-account/user-account.module';
-import { UserTypeModule } from './user-type/user-type.module';
 import { join } from 'path';
 import "reflect-metadata"
+import { MulterModule } from '@nestjs/platform-express';
 
 
 @Module({
@@ -32,6 +32,10 @@ import "reflect-metadata"
       synchronize: true,
     
     }),
+
+    MulterModule.register({
+      dest: './files'
+    }),
     
     EducationDetailModule,
     CompanyImageModule,
@@ -45,7 +49,7 @@ import "reflect-metadata"
     SeekerProfileModule,
     SeekerSkillSetModule,
     UserAccountModule,
-    UserTypeModule,
+  
 ],
   controllers: [AppController],
   providers: [AppService],

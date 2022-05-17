@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, HttpException, HttpStatus, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { UserAccountService } from './user-account.service';
 import { CreateUserAccountDto } from './dto/create-user-account.dto';
 import { UpdateUserAccountDto } from './dto/update-user-account.dto';
@@ -6,6 +6,8 @@ import { async } from 'rxjs';
 import { getManager } from 'typeorm';
 import { UserAccount } from './entities/user-account.entity';
 import { compare } from 'bcrypt'
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('user-account')
 export class UserAccountController {
@@ -30,7 +32,31 @@ export class UserAccountController {
     }
     
   }
-  //TODO
+
+  @Post('/uploadProfilePhoto')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: '../public/ProfilePhoto',
+        filename: (req,file,cb) => {
+          const fileNameSplit = file.originalname.split(".")
+          const fileExt = fileNameSplit[fileNameSplit.length - 1]
+          cb(null, `${req.body.company_name}.${fileExt}`)
+          console.log(req.body)
+        }
+      }),
+    })
+  )
+  async uploadedFile( @UploadedFile() file: Express.Multer.File){
+    console.log(file)
+    const response = {
+      
+      filename: file.filename,
+    };
+
+    return response
+    
+  }
 
   @Get()
   findAll() {

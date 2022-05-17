@@ -11,7 +11,7 @@ export class SeekerSkillSetService {
     const{skills, user_id} = createSeekerSkillSetDto;
     const SkillRepo = getManager().getRepository(SeekerSkillSet);
     const SeekerProfileRepo = getManager().getRepository(SeekerProfile)
-    const seeker = await SeekerProfileRepo.findOne({seeker_profile_id: user_id});
+    const seeker = await SeekerProfileRepo.findOne({id: user_id});
     Object.values(skills).forEach(async (skillName: string) => {
       const skill = {
         seeker,
@@ -20,6 +20,7 @@ export class SeekerSkillSetService {
       SkillRepo.create(skill);
       await SkillRepo.save(skill);
     });
+    return {status: "OK"}
   }
 
   findAll() {

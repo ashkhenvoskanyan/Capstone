@@ -9,13 +9,6 @@ export class JobPostActivity extends BaseEntity{
     @PrimaryGeneratedColumn()
     activity_id: number
 
-    // @Column()
-    // user_account_id: number
-    //te pahenq
-    //seeker_profile_id: number
-
-    // @Column()
-    // job_post_id: number
 
     @Column()
     apply_date: Date

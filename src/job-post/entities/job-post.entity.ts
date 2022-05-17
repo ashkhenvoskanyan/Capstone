@@ -10,7 +10,7 @@ import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryColumn, Primar
 export class JobPost extends BaseEntity{
 
     @PrimaryGeneratedColumn()
-    job_post_id: number
+    id: number
 
     @Column()
     created_date: Date

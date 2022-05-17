@@ -8,7 +8,7 @@ import { SeekerProfile } from 'src/seeker-profile/entities/seeker-profile.entity
 
 enum UserType {
   admin = 1,
-  seeker =2
+  seeker = 2
 }
 
 
@@ -26,7 +26,8 @@ export class UserAccountService {
     date_of_birth, 
     gender, 
     is_active, 
-    contact_number
+    contact_number,
+    user_type
   })
 
   if(user_type === UserType.seeker){

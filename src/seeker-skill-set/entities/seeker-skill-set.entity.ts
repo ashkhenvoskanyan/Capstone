@@ -1,5 +1,5 @@
 import { SeekerProfile } from "src/seeker-profile/entities/seeker-profile.entity";
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('seeker_skill_set')
 
@@ -11,7 +11,11 @@ export class SeekerSkillSet extends BaseEntity{
     @Column()
     skills: string
 
-    @ManyToOne(() => SeekerProfile, (seeker) => seeker.skills)
+    @Column({ nullable: true })
+    seekerId: number
+
+    @ManyToOne(() => SeekerProfile, (seeker) => seeker.skills, {eager: true})
+    @JoinColumn()
     seeker: SeekerProfile
 
     // @Column()

@@ -10,7 +10,7 @@ import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColum
 export class SeekerProfile extends BaseEntity{
 
     @PrimaryGeneratedColumn()
-    seeker_profile_id: number
+    id: number
 
     @Column()
     first_name: string
@@ -30,7 +30,7 @@ export class SeekerProfile extends BaseEntity{
     @OneToMany(() => JobPostActivity, (activity) => activity.seeker)
     activity: JobPostActivity[]
 
-    @ManyToOne(() => UserAccount, (user) => user.seeker)
+    @ManyToOne(() => UserAccount, (user) => user.seeker, {eager: true})
     user: UserAccount
 
 }

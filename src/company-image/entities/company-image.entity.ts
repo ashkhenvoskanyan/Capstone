@@ -6,7 +6,7 @@ import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedC
 export class CompanyImage extends BaseEntity{
 
     @PrimaryGeneratedColumn()
-    cimage_id: number
+    id: number
 
     @Column()
     company_image: string //(aaa.jpg)

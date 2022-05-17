@@ -1,5 +1,5 @@
 import { JobPost } from "src/job-post/entities/job-post.entity";
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('job_post_skills')
 
@@ -14,9 +14,13 @@ export class JobPostSkillsSet extends BaseEntity{
     @Column()
     skills: string
 
+    @Column({ nullable: true })
+    jobId: number
+
     // @Column()
     // skill_level: number
 
-    @ManyToOne(() => JobPost, (job) => job.skills)
+    @ManyToOne(() => JobPost, (job) => job.skills, {eager: true})
+    @JoinColumn()
     job: JobPost
 }
