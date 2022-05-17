@@ -15,8 +15,8 @@ export class JobLocationService {
       street_address, 
       city, 
       country
-      })
-      await LocationRepo.save(location)
+    })
+    await LocationRepo.save(location)
     return location
   }
 

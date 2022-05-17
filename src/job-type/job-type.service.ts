@@ -1,11 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { getManager } from 'typeorm';
 import { CreateJobTypeDto } from './dto/create-job-type.dto';
 import { UpdateJobTypeDto } from './dto/update-job-type.dto';
+import { JobType } from './entities/job-type.entity';
 
 @Injectable()
 export class JobTypeService {
-  create(createJobTypeDto: CreateJobTypeDto) {
-    return 'This action adds a new jobType';
+  async create(createJobTypeDto: CreateJobTypeDto) {
+
+    const {job_type} = createJobTypeDto
+
+    const TypeRepo = getManager().getRepository(JobType)
+    const type = TypeRepo.create({
+      job_type
+    })
+    await TypeRepo.save(type)
+    return type;
   }
 
   findAll() {
