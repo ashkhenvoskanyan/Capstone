@@ -33,30 +33,37 @@ export class UserAccountController {
     
   }
 
-  @Post('/uploadProfilePhoto')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: '../public/ProfilePhoto',
-        filename: (req,file,cb) => {
-          const fileNameSplit = file.originalname.split(".")
-          const fileExt = fileNameSplit[fileNameSplit.length - 1]
-          cb(null, `${req.body.company_name}.${fileExt}`)
-          console.log(req.body)
-        }
-      }),
-    })
-  )
-  async uploadedFile( @UploadedFile() file: Express.Multer.File){
-    console.log(file)
-    const response = {
-      
-      filename: file.filename,
-    };
+  // @Post('/uploadProfilePhoto')
+  // @UseInterceptors(
+  //   FileInterceptor('file', {
+  //     storage: diskStorage({
+  //       destination: '../public/ProfilePhoto',
+  //       filename: (_,file,cb) => {
+  //         const fileNameSplit = file.originalname.split(".")
+  //         const fileExt = fileNameSplit[fileNameSplit.length - 1]
+  //         cb(null, `${Date.now()}.${fileExt}`)
+  //       }
+  //     }),
+  //   })
+  // )
+  // async uploadedFile(@Body() body: any, @UploadedFile() file: Express.Multer.File){
+  //   // console.log(file)
+  //   const response = {
+  //     filename: file.filename,
+  //   };
 
-    return response
+  //   // const {company_id} = body
+  //   // const CompanyRepo = getManager().getRepository(Company)
+  //   // const company = await CompanyRepo.findOne({id:company_id})
+  //   const PhotosRepo = getManager().getRepository(UserAccount);
+  //   const photos = PhotosRepo.create({
+  //     user_image: file.filename
+  //   })
+  //   await PhotosRepo.save(photos)
+
+  //   return response
     
-  }
+  // }
 
   @Get()
   findAll() {

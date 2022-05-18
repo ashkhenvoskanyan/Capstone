@@ -7,11 +7,16 @@ import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedC
 export class JobPostActivity extends BaseEntity{
 
     @PrimaryGeneratedColumn()
-    activity_id: number
-
+    id: number
 
     @Column()
     apply_date: Date
+
+    @Column({ nullable: true })
+    seekerId: number
+
+    @Column({ nullable: true })
+    jobId: number
 
     @ManyToOne(() => JobPost, (job) => job.activity)
     job: JobPost

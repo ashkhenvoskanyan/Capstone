@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UploadedFiles } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { Company } from 'src/company/entities/company.entity';
 import { getManager } from 'typeorm';
 import { CompanyImageService } from './company-image.service';
 import { CreateCompanyImageDto } from './dto/create-company-image.dto';
@@ -31,22 +32,33 @@ export class CompanyImageController {
         }
       }),
     }))
-  uploadMultipleFiles(@Body() body: any, @UploadedFiles() files: Array<Express.Multer.File>){
+  async uploadMultipleFiles(@Body() body: any, @UploadedFiles() files: Array<Express.Multer.File>){
 
     const response = []
-    files.forEach(({ filename }) => {
+    files.forEach(async ({ filename }) => {
       const fileReponse ={
         filename,
       }
+      //console.log(fileReponse)
       // TODO: Save in db
-      //const {company_image} = CreateCompanyImageDto
-      // const PhotosRepo = getManager().getRepository(CompanyImage);
-      // const photos = PhotosRepo.create({
-      //   company_image
-      // })
 
       response.push(fileReponse);
+
+      const {company_id} = body
+      const CompanyRepo = getManager().getRepository(Company)
+      const company = await CompanyRepo.findOne({id:company_id})
+      const PhotosRepo = getManager().getRepository(CompanyImage);
+      const photos = PhotosRepo.create({
+        company,
+        company_image: filename
+      
+      })
+      await PhotosRepo.save(photos)
+
+      
+      
     })
+    //console.log(response)
 
     return response
   }
@@ -65,12 +77,21 @@ export class CompanyImageController {
       }),
     })
   )
-  async uploadedFile( @UploadedFile() file: Express.Multer.File){
-    console.log(file)
+  async uploadedFile(@Body() body: any, @UploadedFile() file: Express.Multer.File){
+    //console.log(file)
     const response = {
-      
       filename: file.filename,
     };
+
+    const {company_id} = body
+    const CompanyRepo = getManager().getRepository(Company)
+    const company = await CompanyRepo.findOne({id:company_id})
+    const PhotosRepo = getManager().getRepository(CompanyImage);
+    const photos = PhotosRepo.create({
+      company,
+      company_image: file.filename
+    })
+    await PhotosRepo.save(photos)
 
     return response
     

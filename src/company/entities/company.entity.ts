@@ -7,7 +7,7 @@ import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedC
 export class Company extends BaseEntity{
 
     @PrimaryGeneratedColumn()
-    company_id: number
+    id: number
 
     @Column()
     company_name: string

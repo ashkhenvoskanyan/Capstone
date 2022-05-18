@@ -32,6 +32,8 @@ export class CreateUserAccountDto {
     @IsNotEmpty()
     user_type: number
 
+    user_image: string
+
 }
 
 
