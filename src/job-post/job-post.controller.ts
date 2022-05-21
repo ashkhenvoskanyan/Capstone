@@ -6,6 +6,9 @@ import { UpdateJobPostDto } from './dto/update-job-post.dto';
 import { getConnection, getManager } from 'typeorm';
 import { JobPostSkillsSet } from 'src/job-post-skills-set/entities/job-post-skills-set.entity';
 import { SeekerSkillSet } from 'src/seeker-skill-set/entities/seeker-skill-set.entity';
+import { JobPost } from './entities/job-post.entity';
+import { UserAccount } from 'src/user-account/entities/user-account.entity';
+import { Company } from 'src/company/entities/company.entity';
 
 @Controller('job-post')
 export class JobPostController {
@@ -42,6 +45,21 @@ export class JobPostController {
     // const job = await getConnection().createQueryBuilder()
     // .select("jobPost")
     // .from()
+  }
+
+  @Get('/companyjobs/:id')
+  async companyJobs(@Param('id') id: string){
+    // const JobRepo = getManager().getRepository(JobPost)
+    // const UserRepo = getManager().getRepository(UserAccount)
+    const CompanyRepo = getManager().getRepository(Company)
+    
+    const jobs = await CompanyRepo.find({
+      where: {
+        userId: id
+      },
+      select: ['jobs']
+    })
+    return jobs
   }
 
   @Get()

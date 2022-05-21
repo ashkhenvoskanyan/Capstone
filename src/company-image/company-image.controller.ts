@@ -81,6 +81,7 @@ export class CompanyImageController {
     //console.log(file)
     const response = {
       filename: file.filename,
+      file: file
     };
 
     const {company_id} = body

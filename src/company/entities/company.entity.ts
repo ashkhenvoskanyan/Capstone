@@ -1,6 +1,7 @@
 import { CompanyImage } from "src/company-image/entities/company-image.entity";
 import { JobPost } from "src/job-post/entities/job-post.entity";
-import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { UserAccount } from "src/user-account/entities/user-account.entity";
+import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('company')
 
@@ -21,10 +22,17 @@ export class Company extends BaseEntity{
     @Column()
     company_website_url: string 
 
-    @OneToMany(() => JobPost, (job) => job.company)
+    @Column({ nullable: true })
+    userId: number
+
+    @OneToMany(() => JobPost, (job) => job.company, {eager: true})
     jobs: JobPost[]
 
     @OneToMany(() => CompanyImage, (image) => image.company)
     images: CompanyImage[]
+
+    @OneToOne(() => UserAccount)
+    @JoinColumn()
+    user: UserAccount
 
 }
