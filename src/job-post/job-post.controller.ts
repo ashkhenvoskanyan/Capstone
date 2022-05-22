@@ -57,17 +57,18 @@ export class JobPostController {
       where: {
         userId: id
       },
-      select: ['jobs']
+      select: ['job']
     })
     return jobs
   }
+
 
   @Get()
   findAll() {
     return this.jobPostService.findAll();
   }
 
-  @Get(':id')
+  @Get('/:id')
   findOne(@Param('id') id: string) {
     return this.jobPostService.findOne(+id);
   }

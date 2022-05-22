@@ -10,4 +10,17 @@ export class CreateJobPostDto {
 
     @IsNotEmpty()
     job_name: string
+
+    @IsNotEmpty()
+    locationId: number
+
+    @IsNotEmpty()
+    typeId: number
+
+    @IsNotEmpty()
+    companyId: number
+    // @IsNotEmpty()
+    // company_id: number
+
+   
 }

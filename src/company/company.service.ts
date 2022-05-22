@@ -9,14 +9,15 @@ export class CompanyService {
   async create(createCompanyDto: CreateCompanyDto) {
 
     const {company_name, profile_description, establishment_date, 
-      company_website_url} = createCompanyDto
+      company_website_url, userId} = createCompanyDto
 
       const CompanyRepo = getManager().getRepository(Company)
       const company = CompanyRepo.create({
         company_name,
         profile_description,
         establishment_date,
-        company_website_url
+        company_website_url,
+        userId
       })
       await CompanyRepo.save(company)
     return company;

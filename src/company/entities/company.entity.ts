@@ -25,14 +25,15 @@ export class Company extends BaseEntity{
     @Column({ nullable: true })
     userId: number
 
-    @OneToMany(() => JobPost, (job) => job.company, {eager: true})
-    jobs: JobPost[]
+    @OneToMany(() => JobPost, (job) => job.company)
+    @JoinColumn()
+    job: JobPost[]
 
     @OneToMany(() => CompanyImage, (image) => image.company)
     images: CompanyImage[]
 
-    @OneToOne(() => UserAccount)
-    @JoinColumn()
+    @OneToOne(() => UserAccount,{eager: true})
+    @JoinColumn({name: "userId"})
     user: UserAccount
 
 }

@@ -6,7 +6,7 @@ import { UserAccount } from './entities/user-account.entity';
 import { hash } from 'bcrypt';
 import { SeekerProfile } from 'src/seeker-profile/entities/seeker-profile.entity';
 
-enum UserType {
+export enum UserType {
   admin = 1,
   seeker = 2
 }
@@ -15,7 +15,7 @@ enum UserType {
 @Injectable()
 export class UserAccountService {
   async create(createUserAccountDto: CreateUserAccountDto) {
-    console.log(createUserAccountDto);
+    //console.log(createUserAccountDto);
    const { first_name, last_name, email, password, date_of_birth = new Date(), gender, is_active, contact_number, user_type, user_image} = createUserAccountDto;
    
   const UserRepo = getManager().getRepository(UserAccount);

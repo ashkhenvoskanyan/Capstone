@@ -35,9 +35,10 @@ export class CompanyImageController {
   async uploadMultipleFiles(@Body() body: any, @UploadedFiles() files: Array<Express.Multer.File>){
 
     const response = []
-    files.forEach(async ({ filename }) => {
+    files.forEach(async ({ filename}) => {
       const fileReponse ={
         filename,
+        files
       }
       //console.log(fileReponse)
       // TODO: Save in db

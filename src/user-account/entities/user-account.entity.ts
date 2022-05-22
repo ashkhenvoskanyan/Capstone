@@ -7,7 +7,7 @@ import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, Pri
 export class UserAccount extends BaseEntity{
 
     @PrimaryGeneratedColumn()
-    account_id: number
+    id: number
 
     @Column()
     email: string

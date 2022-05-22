@@ -8,6 +8,8 @@ import { UserAccount } from './entities/user-account.entity';
 import { compare } from 'bcrypt'
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import * as AuthController from '../user-account/auth.controller'
+
 
 @Controller('user-account')
 export class UserAccountController {
@@ -23,14 +25,9 @@ export class UserAccountController {
     const email = loginDataDto.email
     const password = loginDataDto.password
     const user = await this.getUserByEmail(email)
-    const isCorrect = await this.comparePasswords(password, user.password)
-    if(isCorrect){
-      return user
-    }
-    else{
-      throw new HttpException('Invalid Login or Password', HttpStatus.UNAUTHORIZED);
-    }
-    
+    const accessToken = await AuthController.login(password, user)
+
+    return {status: "OK", accessToken}
   }
 
   // @Post('/uploadProfilePhoto')
@@ -89,7 +86,7 @@ export class UserAccountController {
     const UserRepo = getManager().getRepository(UserAccount)
     const user = await UserRepo.findOne(
       { email },
-      { select: ["email", "password", "account_id", "user_type"]},
+      { select: ["email", "password", "id", "user_type"]},
     )
     if(!user){
       throw new BadRequestException("Invalid email")
@@ -97,8 +94,5 @@ export class UserAccountController {
     return user
   }
 
-  comparePasswords = async (password: string, userPassword: string) => {
-    const passwordsMatch = await compare(password, userPassword)
-    return passwordsMatch
-  }
+  
 }

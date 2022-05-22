@@ -14,4 +14,8 @@ export class CreateCompanyDto {
     @IsNotEmpty()
     company_website_url: string
 
+    @IsNotEmpty()
+    userId: number
+  
+
 }
