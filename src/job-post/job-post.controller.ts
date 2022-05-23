@@ -49,15 +49,21 @@ export class JobPostController {
 
   @Get('/companyjobs/:id')
   async companyJobs(@Param('id') id: string){
-    // const JobRepo = getManager().getRepository(JobPost)
+    const JobRepo = getManager().getRepository(JobPost)
     // const UserRepo = getManager().getRepository(UserAccount)
     const CompanyRepo = getManager().getRepository(Company)
     
-    const jobs = await CompanyRepo.find({
+    
+    const company = await CompanyRepo.find({
       where: {
         userId: id
+      }
+      //select: ['job']
+    })
+    const jobs = await JobRepo.find({
+      where: {
+        companyId: company[0].id
       },
-      select: ['job']
     })
     return jobs
   }
